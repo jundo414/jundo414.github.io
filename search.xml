@@ -13,4 +13,13 @@
     
   
   
+    
+    <entry>
+      <title>page</title>
+      <link href="/index.html"/>
+      <url>/index.html</url>
+      <content type="html"><![CDATA[<p>top page</p>]]></content>
+    </entry>
+    
+  
 </search>
