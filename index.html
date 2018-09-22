@@ -121,7 +121,7 @@
 <li><a href="http://oswiki.osask.jp/?(AT)BIOS" target="_blank" rel="noopener">http://oswiki.osask.jp/?(AT)BIOS</a></li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">ディスクからの読み込み、ディスクへの書き込み、セクタのベリファイ、およびシーク</span><br><span class="line">  AH = 0x02; （読み込み時）</span><br><span class="line">  AH = 0x03; （書き込み時）</span><br><span class="line">  AH = 0x04; （ベリファイ時）</span><br><span class="line">  AH = 0x0c; （シーク時）</span><br><span class="line">  AL = 処理するセクタ数; （連続したセクタを処理できる）</span><br><span class="line">  CH = シリンダ番号 &amp; 0xff;</span><br><span class="line">  CL = セクタ番号(bit0-5) | (シリンダ番号 &amp; 0x300) &gt;&gt; 2;</span><br><span class="line">  DH = ヘッド番号;</span><br><span class="line">  DL = ドライブ番号;</span><br><span class="line">  ES:BX = バッファアドレス; （ベリファイ時、シーク時にはこれは参照しない）</span><br><span class="line"></span><br><span class="line">  戻り値：</span><br><span class="line">    FLAGS.CF == 0 ： エラーなし、AH == 0</span><br><span class="line">    FLAGS.CF == 1 ： エラーあり、AHにエラーコード（リセットファンクションと同じ）</span><br></pre></td></tr></table></figure>
-<p>フロッピーディスクの構成は以下の通り。（書籍より拝借）<br><img src="/create-os-day3//img-disk.png"><br>ここでは、フロッピーの図を掲載したが、HDD とかでもほぼ同じ。</p>
+<p>フロッピーディスクの構成は以下の通り。（書籍より拝借）<br><img src="/create-os-day3//img-disk.png" width="600px"><br>ここでは、フロッピーの図を掲載したが、HDD とかでもほぼ同じ。</p>
 <p>要約すると以下の処理を行なっている。</p>
 <ul>
 <li>AH = ディスクからの読み込み</li>
@@ -156,7 +156,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://haystacker.net/create-os-day3-1/" data-id="cjmd1cm370005tuiji3w1zw2z" class="article-share-link">Share</a>
+        <a data-url="http://haystacker.net/create-os-day3-1/" data-id="cjmd1eiud0005uvijimw9b7ax" class="article-share-link">Share</a>
       
       
       
@@ -223,7 +223,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://haystacker.net/create-os-day3/" data-id="cjmd1cm380006tuijpab1tmwp" class="article-share-link">Share</a>
+        <a data-url="http://haystacker.net/create-os-day3/" data-id="cjmd1eiue0006uvijpbpvfvvo" class="article-share-link">Share</a>
       
       
       
@@ -483,7 +483,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://haystacker.net/create-os-day2/" data-id="cjmd1cm310002tuijltcdj819" class="article-share-link">Share</a>
+        <a data-url="http://haystacker.net/create-os-day2/" data-id="cjmd1eiub0004uvijq9b5bjq2" class="article-share-link">Share</a>
       
       
       
@@ -559,7 +559,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://haystacker.net/create-os-day1/" data-id="cjmd1cm350004tuij0sufk47m" class="article-share-link">Share</a>
+        <a data-url="http://haystacker.net/create-os-day1/" data-id="cjmd1eiu80002uvijcpr4nih6" class="article-share-link">Share</a>
       
       
       
@@ -656,7 +656,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://haystacker.net/create-os-day0/" data-id="cjmd1cm2y0001tuij0ogdqsc5" class="article-share-link">Share</a>
+        <a data-url="http://haystacker.net/create-os-day0/" data-id="cjmd1eiu50001uvijssva54ik" class="article-share-link">Share</a>
       
       
       
@@ -741,7 +741,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://haystacker.net/howto-use-openstack-api/" data-id="cjmd1cm3m000gtuijq20z237l" class="article-share-link">Share</a>
+        <a data-url="http://haystacker.net/howto-use-openstack-api/" data-id="cjmd1eiut000guvijfjkcmfbn" class="article-share-link">Share</a>
       
       
       
@@ -814,7 +814,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://haystacker.net/create-os/" data-id="cjmd1cm3b0009tuijlesfmyqi" class="article-share-link">Share</a>
+        <a data-url="http://haystacker.net/create-os/" data-id="cjmd1eiuh0009uvij33g21ugj" class="article-share-link">Share</a>
       
       
       
