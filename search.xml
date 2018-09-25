@@ -111,17 +111,17 @@
   
     
     <entry>
+      <title>404 Page Not Found</title>
+      <link href="/404.html"/>
+      <url>/404.html</url>
+      <content type="html"><![CDATA[<h1 id="404"><a href="#404" class="headerlink" title="404"></a>404</h1><h2 id="Page-Not-Found"><a href="#Page-Not-Found" class="headerlink" title="Page Not Found"></a>Page Not Found</h2><p>お探しのページは見つかりませんでした。</p><p><a href="/">[トップページ]</a></p>]]></content>
+    </entry>
+    
+    <entry>
       <title>page</title>
       <link href="/index.html"/>
       <url>/index.html</url>
       <content type="html"><![CDATA[<p>top page</p>]]></content>
-    </entry>
-    
-    <entry>
-      <title>404</title>
-      <link href="/404/index.html"/>
-      <url>/404/index.html</url>
-      <content type="html"><![CDATA[]]></content>
     </entry>
     
   
