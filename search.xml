@@ -111,7 +111,7 @@
   
     
     <entry>
-      <title>404 Page Not Found</title>
+      <title>404 - Page Not Found</title>
       <link href="/404.html"/>
       <url>/404.html</url>
       <content type="html"><![CDATA[<p>お探しのページは見つかりませんでした。</p><p>[<a href="/">トップページ</a>]</p>]]></content>
