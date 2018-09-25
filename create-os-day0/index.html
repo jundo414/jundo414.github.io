@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   
   
-  <title>macでOSを自作（0日目） | Haystacker</title>
+  <title>macでOSを自作（0日目） | HayStacker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta name="description" content="目的書籍「30日でできる！OS自作入門」を参考に OS を自作し、OS の仕組みを学習する。この書籍では、Windows OS やフロッピーディスクを前提に記述されているが、mac で実行できるよう適宜内容を変更して実施する。また、書籍内で使用されている著者の独自スクリプトやコマンドも使用せず、汎用的なものをなるべく使用するようにする。 概要Day0 では、mac で OS を自作するための環境構">
@@ -12,18 +12,18 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="macでOSを自作（0日目）">
 <meta property="og:url" content="http://haystacker.net/create-os-day0/index.html">
-<meta property="og:site_name" content="Haystacker">
+<meta property="og:site_name" content="HayStacker">
 <meta property="og:description" content="目的書籍「30日でできる！OS自作入門」を参考に OS を自作し、OS の仕組みを学習する。この書籍では、Windows OS やフロッピーディスクを前提に記述されているが、mac で実行できるよう適宜内容を変更して実施する。また、書籍内で使用されている著者の独自スクリプトやコマンドも使用せず、汎用的なものをなるべく使用するようにする。 概要Day0 では、mac で OS を自作するための環境構">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://haystacker.net/create-os-day0//test-helloos0.png">
-<meta property="og:updated_time" content="2018-09-25T18:53:10.955Z">
+<meta property="og:updated_time" content="2018-09-25T22:32:23.419Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="macでOSを自作（0日目）">
 <meta name="twitter:description" content="目的書籍「30日でできる！OS自作入門」を参考に OS を自作し、OS の仕組みを学習する。この書籍では、Windows OS やフロッピーディスクを前提に記述されているが、mac で実行できるよう適宜内容を変更して実施する。また、書籍内で使用されている著者の独自スクリプトやコマンドも使用せず、汎用的なものをなるべく使用するようにする。 概要Day0 では、mac で OS を自作するための環境構">
 <meta name="twitter:image" content="http://haystacker.net/create-os-day0//test-helloos0.png">
 <meta name="twitter:creator" content="@jundo414">
   
-    <link rel="alternative" href="/atom.xml" title="Haystacker" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="HayStacker" type="application/atom+xml">
   
   
     <link rel="icon" href="favicon.ico">
@@ -43,7 +43,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Haystacker</a>
+        <a href="/" id="logo">HayStacker</a>
       </h1>
       
     </div>
@@ -116,7 +116,7 @@
       
         
         <h1 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h1><p>書籍「<a href="https://www.amazon.co.jp/30%E6%97%A5%E3%81%A7%E3%81%A7%E3%81%8D%E3%82%8B-OS%E8%87%AA%E4%BD%9C%E5%85%A5%E9%96%80-%E5%B7%9D%E5%90%88-%E7%A7%80%E5%AE%9F/dp/4839919844" target="_blank" rel="noopener">30日でできる！OS自作入門</a>」を参考に OS を自作し、OS の仕組みを学習する。<br>この書籍では、Windows OS やフロッピーディスクを前提に記述されているが、mac で実行できるよう適宜内容を変更して実施する。<br>また、書籍内で使用されている著者の独自スクリプトやコマンドも使用せず、汎用的なものをなるべく使用するようにする。</p>
-<h1 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h1><p>Day0 では、mac で OS を自作するための環境構築手順について説明していく。</p>
+<h1 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h1><p>Day0 では、mac で OS を自作するための環境構築手順について説明していく。<br><a id="more"></a></p>
 <h1 id="資材の配置"><a href="#資材の配置" class="headerlink" title="資材の配置"></a>資材の配置</h1><p>HariboteOSという名前のディレクトリをホームディレクトリに作成する。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir ~/HariboteOS</span></span><br></pre></td></tr></table></figure></p>
 <p>下記のサポートサイトより、HariboteOS.zip をダウンロードし、解凍する。</p>
 <ul>
@@ -157,7 +157,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://haystacker.net/create-os-day0/" data-id="cjmi2xlky0002ljijwyyif9no" class="article-share-link">Share</a>
+        <a data-url="http://haystacker.net/create-os-day0/" data-id="cjmib349c00025fij6j0pxiz7" class="article-share-link">Share</a>
       
       
       
@@ -227,16 +227,6 @@
     <h3 id="widget-title-tag" class="widget-title">Tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS/">OS</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenStack/">OpenStack</a><span class="tag-list-count">1</span></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 id="widget-title-tagcloud" class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/OS/" style="font-size: 20px;">OS</a> <a href="/tags/OpenStack/" style="font-size: 10px;">OpenStack</a>
     </div>
   </div>
 

@@ -4,24 +4,24 @@
   <meta charset="utf-8">
   
   
-  <title>macでOSを自作（2日目） | Haystacker</title>
+  <title>macでOSを自作（2日目） | HayStacker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="アセンブラによる OS イメージの作成（その3）Day2 では、./projects/02_day/helloos3/helloos.asm をベースに作業していく。「アセンブラによる OS イメージの作成（その２）」よりもさらに人に優しいコードとなっている。その代わりレジスタや新しいアセンブラ命令が増えているため、新出の命令について以下に簡単に解説しておく。 レジスタレジスタとはCPUの記憶回路">
+  <meta name="description" content="アセンブラによる OS イメージの作成（その3）Day2 では、./projects/02_day/helloos3/helloos.asm をベースに作業していく。「アセンブラによる OS イメージの作成（その２）」よりもさらに人に優しいコードとなっている。その代わりレジスタや新しいアセンブラ命令が増えているため、新出の命令について以下に簡単に解説しておく。">
 <meta name="keywords" content="OS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="macでOSを自作（2日目）">
 <meta property="og:url" content="http://haystacker.net/create-os-day2/index.html">
-<meta property="og:site_name" content="Haystacker">
-<meta property="og:description" content="アセンブラによる OS イメージの作成（その3）Day2 では、./projects/02_day/helloos3/helloos.asm をベースに作業していく。「アセンブラによる OS イメージの作成（その２）」よりもさらに人に優しいコードとなっている。その代わりレジスタや新しいアセンブラ命令が増えているため、新出の命令について以下に簡単に解説しておく。 レジスタレジスタとはCPUの記憶回路">
+<meta property="og:site_name" content="HayStacker">
+<meta property="og:description" content="アセンブラによる OS イメージの作成（その3）Day2 では、./projects/02_day/helloos3/helloos.asm をベースに作業していく。「アセンブラによる OS イメージの作成（その２）」よりもさらに人に優しいコードとなっている。その代わりレジスタや新しいアセンブラ命令が増えているため、新出の命令について以下に簡単に解説しておく。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-25T18:53:35.014Z">
+<meta property="og:updated_time" content="2018-09-25T22:32:46.060Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="macでOSを自作（2日目）">
-<meta name="twitter:description" content="アセンブラによる OS イメージの作成（その3）Day2 では、./projects/02_day/helloos3/helloos.asm をベースに作業していく。「アセンブラによる OS イメージの作成（その２）」よりもさらに人に優しいコードとなっている。その代わりレジスタや新しいアセンブラ命令が増えているため、新出の命令について以下に簡単に解説しておく。 レジスタレジスタとはCPUの記憶回路">
+<meta name="twitter:description" content="アセンブラによる OS イメージの作成（その3）Day2 では、./projects/02_day/helloos3/helloos.asm をベースに作業していく。「アセンブラによる OS イメージの作成（その２）」よりもさらに人に優しいコードとなっている。その代わりレジスタや新しいアセンブラ命令が増えているため、新出の命令について以下に簡単に解説しておく。">
 <meta name="twitter:creator" content="@jundo414">
   
-    <link rel="alternative" href="/atom.xml" title="Haystacker" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="HayStacker" type="application/atom+xml">
   
   
     <link rel="icon" href="favicon.ico">
@@ -41,7 +41,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Haystacker</a>
+        <a href="/" id="logo">HayStacker</a>
       </h1>
       
     </div>
@@ -113,7 +113,7 @@
       
       
         
-        <h1 id="アセンブラによる-OS-イメージの作成（その3）"><a href="#アセンブラによる-OS-イメージの作成（その3）" class="headerlink" title="アセンブラによる OS イメージの作成（その3）"></a>アセンブラによる OS イメージの作成（その3）</h1><p>Day2 では、./projects/02_day/helloos3/helloos.asm をベースに作業していく。<br>「アセンブラによる OS イメージの作成（その２）」よりもさらに人に優しいコードとなっている。<br>その代わりレジスタや新しいアセンブラ命令が増えているため、新出の命令について以下に簡単に解説しておく。</p>
+        <h1 id="アセンブラによる-OS-イメージの作成（その3）"><a href="#アセンブラによる-OS-イメージの作成（その3）" class="headerlink" title="アセンブラによる OS イメージの作成（その3）"></a>アセンブラによる OS イメージの作成（その3）</h1><p>Day2 では、./projects/02_day/helloos3/helloos.asm をベースに作業していく。<br>「アセンブラによる OS イメージの作成（その２）」よりもさらに人に優しいコードとなっている。<br>その代わりレジスタや新しいアセンブラ命令が増えているため、新出の命令について以下に簡単に解説しておく。<br><a id="more"></a></p>
 <h2 id="レジスタ"><a href="#レジスタ" class="headerlink" title="レジスタ"></a>レジスタ</h2><p>レジスタとはCPUの記憶回路。</p>
 <h3 id="16ビットレジスタ"><a href="#16ビットレジスタ" class="headerlink" title="16ビットレジスタ"></a>16ビットレジスタ</h3><table>
 <thead>
@@ -318,7 +318,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://haystacker.net/create-os-day2/" data-id="cjmi2xll50005ljijujw7l9r9" class="article-share-link">Share</a>
+        <a data-url="http://haystacker.net/create-os-day2/" data-id="cjmib349j00055fij06gts8ri" class="article-share-link">Share</a>
       
       
       
@@ -388,16 +388,6 @@
     <h3 id="widget-title-tag" class="widget-title">Tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS/">OS</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenStack/">OpenStack</a><span class="tag-list-count">1</span></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 id="widget-title-tagcloud" class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/OS/" style="font-size: 20px;">OS</a> <a href="/tags/OpenStack/" style="font-size: 10px;">OpenStack</a>
     </div>
   </div>
 

@@ -4,24 +4,24 @@
   <meta charset="utf-8">
   
   
-  <title>OpenStack API 実装例 | Haystacker</title>
+  <title>OpenStack API 実装例 | HayStacker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="curl 使用まずは OpenStack の環境変数を読み込む。 1source ~/overcloudrc 次にユーザ名とパスワード、ドメイン名を指定し、トークンを取得する。keystone で v2 を使用しているか v3 を使用しているかによって トークンの表示位置が変更するので注意が必要。今回は、keysotne v3 を前提にしている。 1token=$(curl -i -s -X PO">
+  <meta name="description" content="curl 使用まずは OpenStack の環境変数を読み込む。 1source ~/overcloudrc 次にユーザ名とパスワード、ドメイン名を指定し、トークンを取得する。keystone で v2 を使用しているか v3 を使用しているかによって トークンの表示位置が変更するので注意が必要。今回は、keysotne v3 を前提にしている。">
 <meta name="keywords" content="OpenStack">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenStack API 実装例">
 <meta property="og:url" content="http://haystacker.net/howto-use-openstack-api/index.html">
-<meta property="og:site_name" content="Haystacker">
-<meta property="og:description" content="curl 使用まずは OpenStack の環境変数を読み込む。 1source ~/overcloudrc 次にユーザ名とパスワード、ドメイン名を指定し、トークンを取得する。keystone で v2 を使用しているか v3 を使用しているかによって トークンの表示位置が変更するので注意が必要。今回は、keysotne v3 を前提にしている。 1token=$(curl -i -s -X PO">
+<meta property="og:site_name" content="HayStacker">
+<meta property="og:description" content="curl 使用まずは OpenStack の環境変数を読み込む。 1source ~/overcloudrc 次にユーザ名とパスワード、ドメイン名を指定し、トークンを取得する。keystone で v2 を使用しているか v3 を使用しているかによって トークンの表示位置が変更するので注意が必要。今回は、keysotne v3 を前提にしている。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-08T08:25:36.519Z">
+<meta property="og:updated_time" content="2018-09-25T22:33:12.268Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenStack API 実装例">
-<meta name="twitter:description" content="curl 使用まずは OpenStack の環境変数を読み込む。 1source ~/overcloudrc 次にユーザ名とパスワード、ドメイン名を指定し、トークンを取得する。keystone で v2 を使用しているか v3 を使用しているかによって トークンの表示位置が変更するので注意が必要。今回は、keysotne v3 を前提にしている。 1token=$(curl -i -s -X PO">
+<meta name="twitter:description" content="curl 使用まずは OpenStack の環境変数を読み込む。 1source ~/overcloudrc 次にユーザ名とパスワード、ドメイン名を指定し、トークンを取得する。keystone で v2 を使用しているか v3 を使用しているかによって トークンの表示位置が変更するので注意が必要。今回は、keysotne v3 を前提にしている。">
 <meta name="twitter:creator" content="@jundo414">
   
-    <link rel="alternative" href="/atom.xml" title="Haystacker" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="HayStacker" type="application/atom+xml">
   
   
     <link rel="icon" href="favicon.ico">
@@ -41,7 +41,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Haystacker</a>
+        <a href="/" id="logo">HayStacker</a>
       </h1>
       
     </div>
@@ -115,8 +115,7 @@
         
         <h1 id="curl-使用"><a href="#curl-使用" class="headerlink" title="curl 使用"></a>curl 使用</h1><p>まずは OpenStack の環境変数を読み込む。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/overcloudrc</span><br></pre></td></tr></table></figure>
-<p>次にユーザ名とパスワード、ドメイン名を指定し、トークンを取得する。<br>keystone で v2 を使用しているか v3 を使用しているかによって トークンの表示位置が変更するので注意が必要。<br>今回は、keysotne v3 を前提にしている。</p>
-<figure class="highlight scilab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">token=$(curl -i -s -X POST -H <span class="string">'Content-Type: application/json'</span> -d <span class="string">'&#123;"</span>auth<span class="string">": &#123;"</span>identity<span class="string">": &#123;"</span>methods<span class="string">": ["</span><span class="string">'$&#123;OS_AUTH_TYPE&#125;'</span><span class="string">"], "</span>password<span class="string">": &#123;"</span>user<span class="string">": &#123;"</span>name<span class="string">": "</span><span class="string">'$&#123;OS_USERNAME&#125;'</span><span class="string">", "</span>password<span class="string">": "</span><span class="string">'$&#123;OS_PASSWORD&#125;'</span><span class="string">", "</span>domain<span class="string">": &#123;"</span>name<span class="string">": "</span><span class="string">'$&#123;OS_PROJECT_DOMAIN_NAME&#125;'</span><span class="string">"&#125;&#125;&#125;&#125;, "</span>scope<span class="string">": &#123;"</span>project<span class="string">": &#123;"</span>name<span class="string">": "</span><span class="string">'$&#123;OS_PROJECT_NAME&#125;'</span><span class="string">", "</span>domain<span class="string">": &#123;"</span>name<span class="string">": "</span><span class="string">'$&#123;OS_PROJECT_DOMAIN_NAME&#125;'</span><span class="string">"&#125;&#125;&#125;&#125;&#125;'</span> $&#123;OS_AUTH_URL&#125;/auth/tokens?nocatalog | grep <span class="string">"X-Subject-Token"</span> | cut -d<span class="string">" "</span> -f2)</span><br></pre></td></tr></table></figure>
+<p>次にユーザ名とパスワード、ドメイン名を指定し、トークンを取得する。<br>keystone で v2 を使用しているか v3 を使用しているかによって トークンの表示位置が変更するので注意が必要。<br>今回は、keysotne v3 を前提にしている。<br><a id="more"></a><br><figure class="highlight scilab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">token=$(curl -i -s -X POST -H <span class="string">'Content-Type: application/json'</span> -d <span class="string">'&#123;"</span>auth<span class="string">": &#123;"</span>identity<span class="string">": &#123;"</span>methods<span class="string">": ["</span><span class="string">'$&#123;OS_AUTH_TYPE&#125;'</span><span class="string">"], "</span>password<span class="string">": &#123;"</span>user<span class="string">": &#123;"</span>name<span class="string">": "</span><span class="string">'$&#123;OS_USERNAME&#125;'</span><span class="string">", "</span>password<span class="string">": "</span><span class="string">'$&#123;OS_PASSWORD&#125;'</span><span class="string">", "</span>domain<span class="string">": &#123;"</span>name<span class="string">": "</span><span class="string">'$&#123;OS_PROJECT_DOMAIN_NAME&#125;'</span><span class="string">"&#125;&#125;&#125;&#125;, "</span>scope<span class="string">": &#123;"</span>project<span class="string">": &#123;"</span>name<span class="string">": "</span><span class="string">'$&#123;OS_PROJECT_NAME&#125;'</span><span class="string">", "</span>domain<span class="string">": &#123;"</span>name<span class="string">": "</span><span class="string">'$&#123;OS_PROJECT_DOMAIN_NAME&#125;'</span><span class="string">"&#125;&#125;&#125;&#125;&#125;'</span> $&#123;OS_AUTH_URL&#125;/auth/tokens?nocatalog | grep <span class="string">"X-Subject-Token"</span> | cut -d<span class="string">" "</span> -f2)</span><br></pre></td></tr></table></figure></p>
 <p>あとは、先ほど取得したトークンを “X-Auth-Token” にセットして、API を発行すれば OK。</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -s -X PUT $&#123;nova_endpoint&#125;<span class="regexp">/$&#123;project_id&#125;/</span>os-services<span class="regexp">/force-down -H "Content-Type: application/</span>json<span class="string">" -H "</span><span class="string">Accept:</span> application/json <span class="string">" -H "</span>X-OpenStack-Nova-API-<span class="string">Version:</span> <span class="number">2.11</span><span class="string">" -H "</span>X-Auth-<span class="string">Token:</span> $&#123;token&#125;<span class="string">" -d '&#123;"</span>binary<span class="string">": "</span>nova-compute<span class="string">", "</span>host<span class="string">": "</span><span class="string">'$&#123;target&#125;'</span><span class="string">", "</span>forced_down<span class="string">": '$&#123;forcedown&#125;'&#125;'</span></span><br></pre></td></tr></table></figure>
 <p>コード全文は以下の通りとなる。</p>
@@ -143,7 +142,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://haystacker.net/howto-use-openstack-api/" data-id="cjmi2xllr000hljijyqizbqnz" class="article-share-link">Share</a>
+        <a data-url="http://haystacker.net/howto-use-openstack-api/" data-id="cjmib34a4000h5fijasrznkgr" class="article-share-link">Share</a>
       
       
       
@@ -213,16 +212,6 @@
     <h3 id="widget-title-tag" class="widget-title">Tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS/">OS</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenStack/">OpenStack</a><span class="tag-list-count">1</span></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 id="widget-title-tagcloud" class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/OS/" style="font-size: 20px;">OS</a> <a href="/tags/OpenStack/" style="font-size: 10px;">OpenStack</a>
     </div>
   </div>
 

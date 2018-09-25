@@ -4,26 +4,26 @@
   <meta charset="utf-8">
   
   
-  <title>macでOSを自作（3日目）-1 | Haystacker</title>
+  <title>macでOSを自作（3日目）-1 | HayStacker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="ブートセクタの実装きちんとしたIPLの作成今回は、前回の “MOV DS,AX” 以降に以下の項目を追加する。12345678910111213141516171819202122(省略)entry:  MOV AX,0    ; レジスタ初期化  MOV SS,AX  MOV SP,0x7c00  MOV DS,AX; ディスクを読む  MOV AX,0x0820  MOV ES,AX  MOV">
+  <meta name="description" content="ブートセクタの実装きちんとしたIPLの作成今回は、前回の “MOV DS,AX” 以降に以下の項目を追加する。">
 <meta name="keywords" content="OS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="macでOSを自作（3日目）-1">
 <meta property="og:url" content="http://haystacker.net/create-os-day3-1/index.html">
-<meta property="og:site_name" content="Haystacker">
-<meta property="og:description" content="ブートセクタの実装きちんとしたIPLの作成今回は、前回の “MOV DS,AX” 以降に以下の項目を追加する。12345678910111213141516171819202122(省略)entry:  MOV AX,0    ; レジスタ初期化  MOV SS,AX  MOV SP,0x7c00  MOV DS,AX; ディスクを読む  MOV AX,0x0820  MOV ES,AX  MOV">
+<meta property="og:site_name" content="HayStacker">
+<meta property="og:description" content="ブートセクタの実装きちんとしたIPLの作成今回は、前回の “MOV DS,AX” 以降に以下の項目を追加する。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://haystacker.net/create-os-day3//img-disk.png">
-<meta property="og:updated_time" content="2018-09-25T18:53:41.917Z">
+<meta property="og:updated_time" content="2018-09-25T22:32:52.613Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="macでOSを自作（3日目）-1">
-<meta name="twitter:description" content="ブートセクタの実装きちんとしたIPLの作成今回は、前回の “MOV DS,AX” 以降に以下の項目を追加する。12345678910111213141516171819202122(省略)entry:  MOV AX,0    ; レジスタ初期化  MOV SS,AX  MOV SP,0x7c00  MOV DS,AX; ディスクを読む  MOV AX,0x0820  MOV ES,AX  MOV">
+<meta name="twitter:description" content="ブートセクタの実装きちんとしたIPLの作成今回は、前回の “MOV DS,AX” 以降に以下の項目を追加する。">
 <meta name="twitter:image" content="http://haystacker.net/create-os-day3//img-disk.png">
 <meta name="twitter:creator" content="@jundo414">
   
-    <link rel="alternative" href="/atom.xml" title="Haystacker" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="HayStacker" type="application/atom+xml">
   
   
     <link rel="icon" href="favicon.ico">
@@ -43,7 +43,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Haystacker</a>
+        <a href="/" id="logo">HayStacker</a>
       </h1>
       
     </div>
@@ -115,7 +115,7 @@
       
       
         
-        <h1 id="ブートセクタの実装"><a href="#ブートセクタの実装" class="headerlink" title="ブートセクタの実装"></a>ブートセクタの実装</h1><h2 id="きちんとしたIPLの作成"><a href="#きちんとしたIPLの作成" class="headerlink" title="きちんとしたIPLの作成"></a>きちんとしたIPLの作成</h2><p>今回は、前回の “MOV DS,AX” 以降に以下の項目を追加する。<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">(省略)</span><br><span class="line"><span class="symbol">entry:</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="built_in">AX</span>,<span class="number">0</span>    <span class="comment">; レジスタ初期化</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="built_in">SS</span>,<span class="built_in">AX</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="built_in">SP</span>,<span class="number">0x7c00</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="built_in">DS</span>,<span class="built_in">AX</span></span><br><span class="line"></span><br><span class="line"><span class="comment">; ディスクを読む</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">MOV</span> <span class="built_in">AX</span>,<span class="number">0x0820</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="built_in">ES</span>,<span class="built_in">AX</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="number">CH</span>,<span class="number">0</span>    <span class="comment">; シリンダ0</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="number">DH</span>,<span class="number">0</span>    <span class="comment">; ヘッド0</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="built_in">CL</span>,<span class="number">2</span>    <span class="comment">; セクタ2</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">MOV</span> <span class="number">AH</span>,<span class="number">0x02</span>   <span class="comment">; AH=0x02 : ディスク読み込み</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="built_in">AL</span>,<span class="number">1</span>    <span class="comment">; 1セクタ</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="built_in">BX</span>,<span class="number">0</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="built_in">DL</span>,<span class="number">0x00</span>   <span class="comment">; Aドライブ</span></span><br><span class="line">  <span class="keyword">INT</span> <span class="number">0x13</span>    <span class="comment">; ディスクBIOS呼び出し</span></span><br><span class="line">  <span class="keyword">JC</span>  error</span><br><span class="line">(省略)</span><br></pre></td></tr></table></figure></p>
+        <h1 id="ブートセクタの実装"><a href="#ブートセクタの実装" class="headerlink" title="ブートセクタの実装"></a>ブートセクタの実装</h1><h2 id="きちんとしたIPLの作成"><a href="#きちんとしたIPLの作成" class="headerlink" title="きちんとしたIPLの作成"></a>きちんとしたIPLの作成</h2><p>今回は、前回の “MOV DS,AX” 以降に以下の項目を追加する。<br><a id="more"></a><br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">(省略)</span><br><span class="line"><span class="symbol">entry:</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="built_in">AX</span>,<span class="number">0</span>    <span class="comment">; レジスタ初期化</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="built_in">SS</span>,<span class="built_in">AX</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="built_in">SP</span>,<span class="number">0x7c00</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="built_in">DS</span>,<span class="built_in">AX</span></span><br><span class="line"></span><br><span class="line"><span class="comment">; ディスクを読む</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">MOV</span> <span class="built_in">AX</span>,<span class="number">0x0820</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="built_in">ES</span>,<span class="built_in">AX</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="number">CH</span>,<span class="number">0</span>    <span class="comment">; シリンダ0</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="number">DH</span>,<span class="number">0</span>    <span class="comment">; ヘッド0</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="built_in">CL</span>,<span class="number">2</span>    <span class="comment">; セクタ2</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">MOV</span> <span class="number">AH</span>,<span class="number">0x02</span>   <span class="comment">; AH=0x02 : ディスク読み込み</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="built_in">AL</span>,<span class="number">1</span>    <span class="comment">; 1セクタ</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="built_in">BX</span>,<span class="number">0</span></span><br><span class="line">  <span class="keyword">MOV</span> <span class="built_in">DL</span>,<span class="number">0x00</span>   <span class="comment">; Aドライブ</span></span><br><span class="line">  <span class="keyword">INT</span> <span class="number">0x13</span>    <span class="comment">; ディスクBIOS呼び出し</span></span><br><span class="line">  <span class="keyword">JC</span>  error</span><br><span class="line">(省略)</span><br></pre></td></tr></table></figure></p>
 <p>JC はキャリーフラグが 1 の場合に遷移する命令。<br>キャリーフラグ (CF) は、符号なし演算でオーバーフローして正常な値を返せない場合にフラグがセットされる。<br>類似のものにオーバーフローフラグ (OF) が存在するが、これは、符号あり演算の時に使用され、以下の場合にフラグがセットされる。</p>
 <ul>
 <li>負の値 + 負の値 = 正の値</li>
@@ -164,7 +164,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://haystacker.net/create-os-day3-1/" data-id="cjmi2xll70007ljijf30wxuq8" class="article-share-link">Share</a>
+        <a data-url="http://haystacker.net/create-os-day3-1/" data-id="cjmib349n00075fijiyswimkj" class="article-share-link">Share</a>
       
       
       
@@ -225,16 +225,6 @@
     <h3 id="widget-title-tag" class="widget-title">Tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS/">OS</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenStack/">OpenStack</a><span class="tag-list-count">1</span></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 id="widget-title-tagcloud" class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/OS/" style="font-size: 20px;">OS</a> <a href="/tags/OpenStack/" style="font-size: 10px;">OpenStack</a>
     </div>
   </div>
 
