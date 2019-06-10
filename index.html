@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
   
@@ -21,14 +21,14 @@
   
     <link rel="icon" href="favicon.ico">
   
-  <link href='//fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+  <link href="//fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="/css/style.css">
   
 
   
 
 </head>
-
+</html>
 <body>
   <div id="container">
     <div id="wrap">
@@ -96,10 +96,10 @@
         <div class="article-sharing">
   <ul>
     <li>
-      <a href="http://b.hatena.ne.jp/entry/http://haystacker.net/linux-pipe-deep-dive/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <a href="http://b.hatena.ne.jp/entry/http://haystacker.net/linux-pipe-deep-dive/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;"></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
     </li>
     <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://haystacker.net/linux-pipe-deep-dive/" data-via="{{ theme.twitter }}" data-counturl="http://haystacker.net/linux-pipe-deep-dive/" >Tweet</a>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://haystacker.net/linux-pipe-deep-dive/" data-via="{{ theme.twitter }}" data-counturl="http://haystacker.net/linux-pipe-deep-dive/">Tweet</a>
     </li>
     <li>
       <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="http://haystacker.net/linux-pipe-deep-dive/"></div>
@@ -111,7 +111,7 @@
       
         
         <p>パイプは、1970年初頭に Third Edition Unix で実装された、Unix の IPC (Interprocess Communication / プロセス間通信) 。<br>パイプは、関連プロセス間でデータの受け渡しを行い、異なるプログラムを実行する2プロセスにおいて、一方の出力をもう一方の入力とすることができる。</p>
-<h1 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h1><p>パイプは以下のように使用される。<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ls / | wc -l</span></span><br><span class="line">22</span><br></pre></td></tr></table></figure></p>
+<h1 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h1><p>パイプは以下のように使用される。<br><figure class="highlight vala"><table><tr><td class="code"><pre><span class="line"><span class="meta"># ls / | wc -l</span></span><br><span class="line"><span class="number">22</span></span><br></pre></td></tr></table></figure></p>
 <p>この例の場合、以下のように順に処理されている。</p>
 <ol>
 <li><p><code>ls /</code> コマンドで対象ファイルの一覧を表示する。</p>
@@ -150,7 +150,7 @@
 <p>私はそれを徹底的にコメントしたので、うまくいけば意味がある。</p>
 <h1 id="名前付きパイプと無名パイプ"><a href="#名前付きパイプと無名パイプ" class="headerlink" title="名前付きパイプと無名パイプ"></a>名前付きパイプと無名パイプ</h1><p>上記の例では、名前のない/匿名のパイプを使用しています。<br>これらのパイプは一時的なもので、プログラムが終了するか、ファイル記述子がすべて閉じられると破棄されます。<br>それらは最も一般的なタイプのパイプです。</p>
 <p>名前付きパイプは、FIFO (first in, first out) としても知られ、ハードディスク上の名前付きファイルとして作成されます。<br>無関係な複数のプログラムを開いて使用することができます。<br>非常にシンプルなクライアント/サーバー型設計のために、複数のライターを1つのリーダーで簡単に作成できます。<br>たとえば、Nagios はこれを行います。<br>マスタープロセスは名前付きパイプを読み込み、すべての子プロセスは名前付きパイプにコマンドを書き込みます。</p>
-<p>名前付きパイプは、<code>mkfifo</code> コマンドまたは <code>syscall</code> を使用して作成しています。<br>例：<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkfifo ~/test_pipe</span></span><br></pre></td></tr></table></figure></p>
+<p>名前付きパイプは、<code>mkfifo</code> コマンドまたは <code>syscall</code> を使用して作成しています。<br>例：<br><figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line"><span class="variable">$ </span>mkfifo ~<span class="regexp">/test_pipe</span></span><br></pre></td></tr></table></figure></p>
 <p>彼らの作成以外にも、名前のないパイプとほとんど同じ働きをします。<br>作成したら、 <code>open(2)</code> を使って開くことができます。<br><code>O_RDONLY</code> を使って読み込み終了を開くか、<code>O_WRONLY</code> を使って書き込み終了をオープンする必要があります。<br>ほとんどのオペレーティングシステムでは単方向パイプが実装されているため、読み取り/書き込みモードで開くことはできません。</p>
 <p>FIFO は、複数のプロセスを持つシステムのために、単方向 IPC 技術としてしばしば使用されます。<br>マルチスレッドアプリケーションは、共有メモリセグメントなどの他の IPC 技術と同様に、名前付きパイプまたは名前のないパイプを使用することもできます。</p>
 <p>FIFO は inode として作成され、<code>i_pipe</code> プロパティは実際のパイプへの参照として設定されます。<br>名前がファイルシステム上に存在するかもしれませんが、inode が読み込まれると、パイプは無名のパイプのように振る舞い、メモリ内で動作するため、パイプは基盤となるデバイスへの I/O を引き起こしません。</p>
@@ -166,7 +166,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://haystacker.net/linux-pipe-deep-dive/" data-id="cjwqq3kxm0008czijgyna5v8t" class="article-share-link">Share</a>
+        <a data-url="http://haystacker.net/linux-pipe-deep-dive/" data-id="cjwqqb6uq0003hzijvyalaub6" class="article-share-link">Share</a>
       
       
       
@@ -210,10 +210,10 @@
         <div class="article-sharing">
   <ul>
     <li>
-      <a href="http://b.hatena.ne.jp/entry/http://haystacker.net/linux-redirect-deep-dive/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <a href="http://b.hatena.ne.jp/entry/http://haystacker.net/linux-redirect-deep-dive/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;"></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
     </li>
     <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://haystacker.net/linux-redirect-deep-dive/" data-via="{{ theme.twitter }}" data-counturl="http://haystacker.net/linux-redirect-deep-dive/" >Tweet</a>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://haystacker.net/linux-redirect-deep-dive/" data-via="{{ theme.twitter }}" data-counturl="http://haystacker.net/linux-redirect-deep-dive/">Tweet</a>
     </li>
     <li>
       <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="http://haystacker.net/linux-redirect-deep-dive/"></div>
@@ -226,11 +226,11 @@
         
         <p>フードの中で bash リダイレクションがどのように機能するのか疑問に思ったことはありますか？<br>リダイレクト自体はかなり簡単です。</p>
 <p>bash を使うと、ファイルをプロセスの stdin にリダイレクトすることも、プロセスの stdout/stderr をファイルや他のファイル記述子にリダイレクトすることもできます（ stderr を stdout にリダイレクトするなど、ファイル記述子なので）。</p>
-<p>リダイレクトは次のようになります。<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ls -la &gt; output.txt</span></span><br></pre></td></tr></table></figure></p>
-<p>上記のコマンドは、stdout を <code>ls</code> コマンドから output.txt ファイルにリダイレクトします。<br>stderr をリダイレクトする方法は次のとおりです。<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ls -la 2 &gt; errors.txt</span></span><br></pre></td></tr></table></figure></p>
+<p>リダイレクトは次のようになります。<br><figure class="highlight stata"><table><tr><td class="code"><pre><span class="line">$ <span class="keyword">ls</span> -<span class="keyword">la</span> &gt; output.txt</span><br></pre></td></tr></table></figure></p>
+<p>上記のコマンドは、stdout を <code>ls</code> コマンドから output.txt ファイルにリダイレクトします。<br>stderr をリダイレクトする方法は次のとおりです。<br><figure class="highlight stata"><table><tr><td class="code"><pre><span class="line">$ <span class="keyword">ls</span> -<span class="keyword">la</span> 2 &gt; errors.txt</span><br></pre></td></tr></table></figure></p>
 <p>これにより、stderr から errors.txt にすべてが送信されます（許可が拒否されたメッセージなど）。<br>そのため、たとえば次のような場合は、<br><figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line">$ <span class="keyword">ls</span> <span class="string">/root</span> &gt; <span class="string">/dev/null</span></span><br></pre></td></tr></table></figure></p>
 <p>ルート以外のユーザーは、出力を /dev/null にリダイレクトしたにもかかわらずエラーメッセージが表示されます。<br>通常、エラーは stderr に書き込まれます。</p>
-<p>最後に、stdin を出力とするファイルの入力リダイレクションを行うこともできます。<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> bash &lt; commands.txt</span></span><br></pre></td></tr></table></figure></p>
+<p>最後に、stdin を出力とするファイルの入力リダイレクションを行うこともできます。<br><figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line">$ <span class="keyword">bash </span>&lt; commands.txt</span><br></pre></td></tr></table></figure></p>
 <p>上記のコマンドは、commands.txt の内容を読み込み、bash インタプリタを使用してそれらを実行します。</p>
 <h1 id="リダイレクトの実装"><a href="#リダイレクトの実装" class="headerlink" title="リダイレクトの実装"></a>リダイレクトの実装</h1><p>とにかく、この記事のポイントは、そのような機能がどのように実装されているかです。<br>プロセスフォークを理解すれば、非常に簡単になることが分かります。</p>
 <p>プロセスが別のプロセス（例えば bash を実行しているls）を実行したいとき、それは一般的に次のように動作します：</p>
@@ -259,7 +259,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://haystacker.net/linux-redirect-deep-dive/" data-id="cjwqq3kx90003czij6m1vpr4q" class="article-share-link">Share</a>
+        <a data-url="http://haystacker.net/linux-redirect-deep-dive/" data-id="cjwqqb6uv0006hzijde7k389m" class="article-share-link">Share</a>
       
       
       
@@ -303,10 +303,10 @@
         <div class="article-sharing">
   <ul>
     <li>
-      <a href="http://b.hatena.ne.jp/entry/http://haystacker.net/linux-process-creation-deep-dive/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <a href="http://b.hatena.ne.jp/entry/http://haystacker.net/linux-process-creation-deep-dive/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;"></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
     </li>
     <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://haystacker.net/linux-process-creation-deep-dive/" data-via="{{ theme.twitter }}" data-counturl="http://haystacker.net/linux-process-creation-deep-dive/" >Tweet</a>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://haystacker.net/linux-process-creation-deep-dive/" data-via="{{ theme.twitter }}" data-counturl="http://haystacker.net/linux-process-creation-deep-dive/">Tweet</a>
     </li>
     <li>
       <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="http://haystacker.net/linux-process-creation-deep-dive/"></div>
@@ -351,7 +351,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://haystacker.net/linux-process-creation-deep-dive/" data-id="cjwqq3kx50002czij9sua7os5" class="article-share-link">Share</a>
+        <a data-url="http://haystacker.net/linux-process-creation-deep-dive/" data-id="cjwqqb6ut0005hzijz99bggay" class="article-share-link">Share</a>
       
       
       
@@ -395,10 +395,10 @@
         <div class="article-sharing">
   <ul>
     <li>
-      <a href="http://b.hatena.ne.jp/entry/http://haystacker.net/howto-use-openstack-api/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <a href="http://b.hatena.ne.jp/entry/http://haystacker.net/howto-use-openstack-api/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;"></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
     </li>
     <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://haystacker.net/howto-use-openstack-api/" data-via="{{ theme.twitter }}" data-counturl="http://haystacker.net/howto-use-openstack-api/" >Tweet</a>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://haystacker.net/howto-use-openstack-api/" data-via="{{ theme.twitter }}" data-counturl="http://haystacker.net/howto-use-openstack-api/">Tweet</a>
     </li>
     <li>
       <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="http://haystacker.net/howto-use-openstack-api/"></div>
@@ -412,7 +412,7 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/overcloudrc</span><br></pre></td></tr></table></figure>
 <p>次にユーザ名とパスワード、ドメイン名を指定し、トークンを取得する。<br>keystone で v2 を使用しているか v3 を使用しているかによって トークンの表示位置が変更するので注意が必要。<br>今回は、keysotne v3 を前提にしている。<br>
         
-          <p class="article-more-link">
+          </p><p class="article-more-link">
             <a href="/howto-use-openstack-api/#more">続きを読む</a>
           </p>
         
@@ -421,7 +421,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://haystacker.net/howto-use-openstack-api/" data-id="cjwqq3kxn0009czijqsxjyskl" class="article-share-link">Share</a>
+        <a data-url="http://haystacker.net/howto-use-openstack-api/" data-id="cjwqqb6uo0002hzijv0ixnnia" class="article-share-link">Share</a>
       
       
       
@@ -456,7 +456,7 @@
       
         <p>  </p>
       
-      <br />
+      <br>
       
         <p>Twitter: <a href="http://twitter.com/jundo414">@jundo414</a> </p>
       
@@ -470,7 +470,7 @@
         <p>GitHub <a href="https://github.com/jundo414">@jundo414</a> </p>
       
       
-      </p>
+      <p></p>
     </div>
   </div>
 
