@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
   <meta charset="utf-8">
   
   
@@ -26,14 +26,14 @@
   
     <link rel="icon" href="favicon.ico">
   
-  <link href="//fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
+  <link href='//fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="/css/style.css">
   
 
   
 
 </head>
-</html>
+
 <body>
   <div id="container">
     <div id="wrap">
@@ -99,10 +99,10 @@
         <div class="article-sharing">
   <ul>
     <li>
-      <a href="http://b.hatena.ne.jp/entry/http://haystacker.net/linux-redirect-deep-dive/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;"></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <a href="http://b.hatena.ne.jp/entry/http://haystacker.net/linux-redirect-deep-dive/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
     </li>
     <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://haystacker.net/linux-redirect-deep-dive/" data-via="{{ theme.twitter }}" data-counturl="http://haystacker.net/linux-redirect-deep-dive/">Tweet</a>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://haystacker.net/linux-redirect-deep-dive/" data-via="{{ theme.twitter }}" data-counturl="http://haystacker.net/linux-redirect-deep-dive/" >Tweet</a>
     </li>
     <li>
       <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="http://haystacker.net/linux-redirect-deep-dive/"></div>
@@ -115,11 +115,11 @@
         
         <p>フードの中で bash リダイレクションがどのように機能するのか疑問に思ったことはありますか？<br>リダイレクト自体はかなり簡単です。</p>
 <p>bash を使うと、ファイルをプロセスの stdin にリダイレクトすることも、プロセスの stdout/stderr をファイルや他のファイル記述子にリダイレクトすることもできます（ stderr を stdout にリダイレクトするなど、ファイル記述子なので）。</p>
-<p>リダイレクトは次のようになります。<br><figure class="highlight stata"><table><tr><td class="code"><pre><span class="line">$ <span class="keyword">ls</span> -<span class="keyword">la</span> &gt; output.txt</span><br></pre></td></tr></table></figure></p>
-<p>上記のコマンドは、stdout を <code>ls</code> コマンドから output.txt ファイルにリダイレクトします。<br>stderr をリダイレクトする方法は次のとおりです。<br><figure class="highlight stata"><table><tr><td class="code"><pre><span class="line">$ <span class="keyword">ls</span> -<span class="keyword">la</span> 2 &gt; errors.txt</span><br></pre></td></tr></table></figure></p>
+<p>リダイレクトは次のようになります。<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ls -la &gt; output.txt</span></span><br></pre></td></tr></table></figure></p>
+<p>上記のコマンドは、stdout を <code>ls</code> コマンドから output.txt ファイルにリダイレクトします。<br>stderr をリダイレクトする方法は次のとおりです。<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ls -la 2 &gt; errors.txt</span></span><br></pre></td></tr></table></figure></p>
 <p>これにより、stderr から errors.txt にすべてが送信されます（許可が拒否されたメッセージなど）。<br>そのため、たとえば次のような場合は、<br><figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line">$ <span class="keyword">ls</span> <span class="string">/root</span> &gt; <span class="string">/dev/null</span></span><br></pre></td></tr></table></figure></p>
 <p>ルート以外のユーザーは、出力を /dev/null にリダイレクトしたにもかかわらずエラーメッセージが表示されます。<br>通常、エラーは stderr に書き込まれます。</p>
-<p>最後に、stdin を出力とするファイルの入力リダイレクションを行うこともできます。<br><figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line">$ <span class="keyword">bash </span>&lt; commands.txt</span><br></pre></td></tr></table></figure></p>
+<p>最後に、stdin を出力とするファイルの入力リダイレクションを行うこともできます。<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> bash &lt; commands.txt</span></span><br></pre></td></tr></table></figure></p>
 <p>上記のコマンドは、commands.txt の内容を読み込み、bash インタプリタを使用してそれらを実行します。</p>
 <h1 id="リダイレクトの実装"><a href="#リダイレクトの実装" class="headerlink" title="リダイレクトの実装"></a>リダイレクトの実装</h1><p>とにかく、この記事のポイントは、そのような機能がどのように実装されているかです。<br>プロセスフォークを理解すれば、非常に簡単になることが分かります。</p>
 <p>プロセスが別のプロセス（例えば bash を実行しているls）を実行したいとき、それは一般的に次のように動作します：</p>
@@ -151,7 +151,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://haystacker.net/linux-redirect-deep-dive/" data-id="cjwqqb6uv0006hzijde7k389m" class="article-share-link">Share</a>
+        <a data-url="http://haystacker.net/linux-redirect-deep-dive/" data-id="cjwqqr6tw0003ntij1uups7ih" class="article-share-link">Share</a>
       
       
       
@@ -204,12 +204,12 @@
       
         <p>  </p>
       
-      <br>
+      <br />
       
         <p>Twitter: <a href="http://twitter.com/jundo414">@jundo414</a> </p>
       
       
-        <p>Facebook: <a href="https://www.facebook.com/hayato.otsuka.16">@hayato.otsuka.16</a> </p>
+        <p>Facebook: <a href="https://www.facebook.com/">@</a> </p>
       
       
         <p>SlideShare <a href="https://www.slideshare.net/jundo414">@jundo414</a> </p>
@@ -218,7 +218,7 @@
         <p>GitHub <a href="https://github.com/jundo414">@jundo414</a> </p>
       
       
-      <p></p>
+      </p>
     </div>
   </div>
 
