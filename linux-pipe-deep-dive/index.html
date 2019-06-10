@@ -16,7 +16,7 @@
 <meta property="og:description" content="パイプは、1970年初頭に Third Edition Unix で実装された、Unix の IPC (Interprocess Communication / プロセス間通信) 。パイプは、関連プロセス間でデータの受け渡しを行い、異なるプログラムを実行する2プロセスにおいて、一方の出力をもう一方の入力とすることができる。 概要パイプは以下のように使用される。# ls / | wc -l22 この">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://haystacker.net/linux-pipe-deep-dive//pipe01.png">
-<meta property="og:updated_time" content="2018-11-05T17:46:12.067Z">
+<meta property="og:updated_time" content="2019-01-20T04:55:34.794Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[徹底解説] Linux パイプのしくみ">
 <meta name="twitter:description" content="パイプは、1970年初頭に Third Edition Unix で実装された、Unix の IPC (Interprocess Communication / プロセス間通信) 。パイプは、関連プロセス間でデータの受け渡しを行い、異なるプログラムを実行する2プロセスにおいて、一方の出力をもう一方の入力とすることができる。 概要パイプは以下のように使用される。# ls / | wc -l22 この">
@@ -117,24 +117,28 @@
         
         <p>パイプは、1970年初頭に Third Edition Unix で実装された、Unix の IPC (Interprocess Communication / プロセス間通信) 。<br>パイプは、関連プロセス間でデータの受け渡しを行い、異なるプログラムを実行する2プロセスにおいて、一方の出力をもう一方の入力とすることができる。</p>
 <h1 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h1><p>パイプは以下のように使用される。<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ls / | wc -l</span></span><br><span class="line">22</span><br></pre></td></tr></table></figure></p>
-<p>この例の場合、以下のように順に処理される。</p>
-<p>まず <code>ls /</code> コマンドで対象ファイルの一覧を表示しする。<br><figure class="highlight tcl"><table><tr><td class="code"><pre><span class="line">bin   dev  home  lib64  mnt  <span class="keyword">proc</span><span class="title">  run</span> <span class="title">  srv</span> <span class="title"> tmp</span> <span class="title"> vagrant</span> <span class="title"> work</span></span><br><span class="line"><span class="title">boot</span> <span class="title"> etc</span> <span class="title"> lib</span> <span class="title">  media</span> <span class="title"> opt</span> <span class="title"> root</span> <span class="title"> sbin</span> <span class="title"> sys</span> <span class="title"> usr</span> <span class="title"> var</span></span><br></pre></td></tr></table></figure></p>
-<p>その後、前の出力結果を入力値として、<code>wc -l</code> を実行して出力ライン数をカウント・表示する。<br><figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line"><span class="number">22</span></span><br></pre></td></tr></table></figure></p>
+<p>この例の場合、以下のように順に処理されている。</p>
+<ol>
+<li><p><code>ls /</code> コマンドで対象ファイルの一覧を表示する。</p>
+<figure class="highlight tcl"><table><tr><td class="code"><pre><span class="line">bin   dev  home  lib64  mnt  <span class="keyword">proc</span><span class="title">  run</span> <span class="title">  srv</span> <span class="title"> tmp</span> <span class="title"> vagrant</span> <span class="title"> work</span></span><br><span class="line"><span class="title">boot</span> <span class="title"> etc</span> <span class="title"> lib</span> <span class="title">  media</span> <span class="title"> opt</span> <span class="title"> root</span> <span class="title"> sbin</span> <span class="title"> sys</span> <span class="title"> usr</span> <span class="title"> var</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>前の出力結果を入力値として、<code>wc -l</code> を実行して出力ライン数をカウント・表示する。</p>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line"><span class="number">22</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 <p><img src="/linux-pipe-deep-dive//pipe01.png" width="650px"></p>
-<h1 id="パイプの実装"><a href="#パイプの実装" class="headerlink" title="パイプの実装"></a>パイプの実装</h1><p>私が bash のパイプのしくみを説明する前に、カーネルがどのようにパイプを実装しているかについて説明します。</p>
+<h1 id="パイプの実装"><a href="#パイプの実装" class="headerlink" title="パイプの実装"></a>パイプの実装</h1><p>カーネルにおけてパイプは以下のように実装されている。</p>
 <ul>
-<li>Linux には、ブート時にカーネル空間にマウントされる、pipefs という VFS (仮想ファイルシステム) モジュールがあります</li>
-<li>pipefs はルートファイルシステム（/）のそばにマウントされています（パイプのルートは <code>pipe:</code>）</li>
-<li>ほとんどのファイルシステムと異なり、pipefs はユーザーが直接調べることはできません</li>
-<li>pipefs のエントリポイントは <code>pipe(2)</code> システムコールです</li>
-<li><code>pipe(2)</code> システムコールはシェルや他のプログラムがパイプを実装するために使用され、pipefs に新しいファイルを作成し、2つのファイル記述子を返します（読み込み側、 <code>O_RDONLY</code> 書き込み終了、 <code>O_WRONLY</code> でオープン）</li>
-<li>pipefs は、メモリ内ファイルシステムを使用して格納されます。</li>
+<li>パイプはファイルシステム上に実態を持たないが、 inode 構造体などの管理構造を維持する必要があるため、pipefs という仮想ファイルシステム (VFS) を導入している</li>
+<li>pipefs ファイルシステムは、システムのディレクトリツリーにマウントポイントを持っていないため、ユーザから見ることはできない</li>
+<li>pipefs のエントリポイントは、シェルや他のプログラムでパイプを実装するために使用される <code>pipe(2)</code> システムコール</li>
+<li><code>pipe(2)</code> は新しいパイプを作成し、ファイルディスクリプターを二つ返す（ディスクリプターのうち、一方はパイプの読み出し側を、もう一方は 書き込み側を参照している）</li>
 </ul>
-<h1 id="パイプ-I-O、バッファリング、容量"><a href="#パイプ-I-O、バッファリング、容量" class="headerlink" title="パイプ I/O、バッファリング、容量"></a>パイプ I/O、バッファリング、容量</h1><p>Linux ではパイプの容量が限られています。<br>パイプがいっぱいになると <code>write(2)</code>がブロックされます（ <code>O_NONBLOCK</code> フラグがセットされていると失敗します）。<br>異なる実装のパイプには異なる制限があるため、アプリケーションは特定のサイズのパイプに頼るべきではありません。<br>アプリケーションは、データが利用可能になるとすぐにデータを消費するように設計されているため、書き込みプロセスはブロックされません。<br>それは、パイプの大きさが分かっていることが分かりました。<br>Linux 2.6.35 以降、デフォルトのパイプ容量は 65,536 バイトです（これは、i386 アーキテクチャでは、ページファイルのサイズ、たとえば4096バイトです）。</p>
-<p>プロセスが空のパイプからの読み取りを試みると、 <code>read(2)</code> はデータがパイプ内で利用可能になるまでブロックします。<br>パイプの書き込み側を指すファイルディスクリプタがすべて閉じられた場合、パイプから読み取ると EOF が返されます（ <code>read(2)</code> は 0 を返します）。</p>
-<p>プロセスがフル・パイプに書き込もうとすると、write 呼び出しが成功するのに十分なデータがパイプから読み取られるまで、 <code>write(2)</code> はブロックされます。<br>パイプの読み込み側を指すファイルディスクリプタがすべて閉じられた場合、パイプに書き込むと <code>SIGPIPE</code> シグナルが送出されます。<br>このシグナルが無視されると、 <code>write(2)</code> はエラー <code>EPIPE</code> で失敗します。</p>
-<p>パイプの性能を理解する際には、このすべてが重要です。<br>プロセス A がプロセス B がそれを読み取っているのとほぼ同じ速度でデータを書き込んでいる場合、パイプは非常にうまく動作し、高性能です。<br>ここでの不均衡は、パフォーマンスの問題を引き起こす可能性があります。<br>詳細や例については、次のセクションを参照してください。</p>
-<h1 id="シェルがパイプを行う方法"><a href="#シェルがパイプを行う方法" class="headerlink" title="シェルがパイプを行う方法"></a>シェルがパイプを行う方法</h1><p>続行する前に、<a href="../linux-process-creation-deep-dive">徹底解説] Linux プロセス生成のしくみ</a>を知っておく必要があります。</p>
+<h1 id="パイプ-I-O、バッファリング、容量"><a href="#パイプ-I-O、バッファリング、容量" class="headerlink" title="パイプ I/O、バッファリング、容量"></a>パイプ I/O、バッファリング、容量</h1><p>Linux ではパイプの容量が限られており、パイプの容量がフルになると <code>write(2)</code>がブロックされる（<code>O_NONBLOCK</code> フラグがセットされている場合は失敗する）。<br>Linux 2.6.35 以降、デフォルトのパイプ容量は 65,536 バイト、それ以前のバージョンでは、パイプの容量はシステムのページサイズと同一（例えば i386 の場合は 4,096 バイト）となっている。</p>
+<p>プロセスが空のパイプからの読み取りを試みた際、<code>read(2)</code> はデータがパイプ内で利用可能になるまでブロックする。<br>パイプの書き込み側を指すファイルディスクリプタがすべて閉じられた場合、パイプから読み取りを試みると EOF が返される（<code>read(2)</code> が 0 を返す）。</p>
+<p>プロセスがフルになったパイプに書き込もうとすると、write 呼び出しが成功するのに十分なデータがパイプから読み取られるまで、<code>write(2)</code> はブロックされる。<br>パイプの読み込み側のファイルディスクリプタがすべて閉じられると、パイプに書き込んだ際に <code>SIGPIPE</code> シグナルが送られる。<br>呼び出し元のプロセスがこのこのシグナルを無視している場合、<code>write(2)</code> はエラー <code>EPIPE</code> で失敗する。</p>
+<p>つまり、プロセスAからの書き込みと、プロセスBからの読み込みが同じ速度で行われている場合は、最大のパフォーマンスを出すことができるが、速度が乖離している場合には、パフォーマンス劣化を引き起こす場合があるので、注意が必要となる。</p>
+<h1 id="シェルでパイプを行う方法"><a href="#シェルでパイプを行う方法" class="headerlink" title="シェルでパイプを行う方法"></a>シェルでパイプを行う方法</h1><p>ここからは、Linux においてプロセスがどのように生成されるのかについて、理解していることを前提として説明をしていく。<br>ご存知でない方は <a href="../linux-process-creation-deep-dive">“[徹底解説] Linux プロセス生成のしくみ”</a> を参照のこと。</p>
 <p>シェルは、「リダイレクションの実装方法」と非常によく似た方法でパイプを実装します。<br>基本的には、親プロセスは、一緒にパイプ処理される2つのプロセスごとに、 <code>pipe(2)</code> を1回呼び出します。<br>上記の例では、bash は2つのパイプを作成するために <code>pipe(2)</code> を2回呼び出す必要があります。次に、bash はプロセスごとに1回ずつフォークします（この例では3回）。<br>各子は1つのコマンドを実行します。<br>しかし、子供がコマンドを実行する前に、stdin または stdout（またはその両方）を上書きします。上記の例では、次のように動作します。</p>
 <ul>
 <li>bash は2つのパイプを作成します.1つはソートするパイプ、もう1つはソートするパイプです</li>
@@ -170,7 +174,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://haystacker.net/linux-pipe-deep-dive/" data-id="cjr4att0n0009rdijky5xiwtg" class="article-share-link">Share</a>
+        <a data-url="http://haystacker.net/linux-pipe-deep-dive/" data-id="cjwqq3kxm0008czijgyna5v8t" class="article-share-link">Share</a>
       
       
       
