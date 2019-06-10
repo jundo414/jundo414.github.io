@@ -4,16 +4,23 @@
   <meta charset="utf-8">
   
   
-  <title>HayStacker</title>
+  <title>[徹底解説] Linux パイプのしくみ | HayStacker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="website">
-<meta property="og:title" content="HayStacker">
-<meta property="og:url" content="http://haystacker.net/index.html">
+  <meta name="description" content="パイプは、1970年初頭に Third Edition Unix で実装された、Unix の IPC (Interprocess Communication / プロセス間通信) 。パイプは、関連プロセス間でデータの受け渡しを行い、異なるプログラムを実行する2プロセスにおいて、一方の出力をもう一方の入力とすることができる。 概要パイプは以下のように使用される。# ls / | wc -l22 この">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[徹底解説] Linux パイプのしくみ">
+<meta property="og:url" content="http://haystacker.net/linux-pipe-deep-dive/index.html">
 <meta property="og:site_name" content="HayStacker">
+<meta property="og:description" content="パイプは、1970年初頭に Third Edition Unix で実装された、Unix の IPC (Interprocess Communication / プロセス間通信) 。パイプは、関連プロセス間でデータの受け渡しを行い、異なるプログラムを実行する2プロセスにおいて、一方の出力をもう一方の入力とすることができる。 概要パイプは以下のように使用される。# ls / | wc -l22 この">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://haystacker.net/linux-pipe-deep-dive//pipe01.png">
+<meta property="og:updated_time" content="2018-11-05T17:46:12.067Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HayStacker">
+<meta name="twitter:title" content="[徹底解説] Linux パイプのしくみ">
+<meta name="twitter:description" content="パイプは、1970年初頭に Third Edition Unix で実装された、Unix の IPC (Interprocess Communication / プロセス間通信) 。パイプは、関連プロセス間でデータの受け渡しを行い、異なるプログラムを実行する2プロセスにおいて、一方の出力をもう一方の入力とすることができる。 概要パイプは以下のように使用される。# ls / | wc -l22 この">
+<meta name="twitter:image" content="http://haystacker.net/linux-pipe-deep-dive//pipe01.png">
 <meta name="twitter:creator" content="@jundo414">
   
     <link rel="alternative" href="/atom.xml" title="HayStacker" type="application/atom+xml">
@@ -65,9 +72,7 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-linux-pipe-deep-dive" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-linux-pipe-deep-dive" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/linux-pipe-deep-dive/" class="article-date">
   <time datetime="2018-10-08T22:13:51.000Z" itemprop="datePublished">2018-10-09</time>
@@ -83,8 +88,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/linux-pipe-deep-dive/">[徹底解説] Linux パイプのしくみ</a>
+    <h1 class="article-title" itemprop="name">
+      [徹底解説] Linux パイプのしくみ
     </h1>
   
 
@@ -159,6 +164,9 @@
 
       
       
+        
+
+      
     </div>
     <footer class="article-footer">
       
@@ -172,267 +180,21 @@
     </footer>
   </div>
   
-</article>
-
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-linux-redirect-deep-dive" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/linux-redirect-deep-dive/" class="article-date">
-  <time datetime="2018-10-07T20:54:07.000Z" itemprop="datePublished">2018-10-08</time>
-</a>
-
-    
-
-  </div>
-  <div class="article-inner">
-    
-
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/linux-redirect-deep-dive/">[徹底解説] Linux リダイレクトのしくみ</a>
-    </h1>
+    <a href="/linux-redirect-deep-dive/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older Post</strong>
+      <div class="article-nav-title">[徹底解説] Linux リダイレクトのしくみ</div>
+    </a>
   
+</nav>
 
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <div class="article-sharing">
-  <ul>
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://haystacker.net/linux-redirect-deep-dive/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://haystacker.net/linux-redirect-deep-dive/" data-via="{{ theme.twitter }}" data-counturl="http://haystacker.net/linux-redirect-deep-dive/" >Tweet</a>
-    </li>
-    <li>
-      <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="http://haystacker.net/linux-redirect-deep-dive/"></div>
-    </li>
-  </ul>
-</div>
-
-      
-      
-        
-        <p>フードの中で bash リダイレクションがどのように機能するのか疑問に思ったことはありますか？<br>リダイレクト自体はかなり簡単です。</p>
-<p>bash を使うと、ファイルをプロセスの stdin にリダイレクトすることも、プロセスの stdout/stderr をファイルや他のファイル記述子にリダイレクトすることもできます（ stderr を stdout にリダイレクトするなど、ファイル記述子なので）。</p>
-<p>リダイレクトは次のようになります。<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ls -la &gt; output.txt</span></span><br></pre></td></tr></table></figure></p>
-<p>上記のコマンドは、stdout を <code>ls</code> コマンドから output.txt ファイルにリダイレクトします。<br>stderr をリダイレクトする方法は次のとおりです。<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ls -la 2 &gt; errors.txt</span></span><br></pre></td></tr></table></figure></p>
-<p>これにより、stderr から errors.txt にすべてが送信されます（許可が拒否されたメッセージなど）。<br>そのため、たとえば次のような場合は、<br><figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line">$ <span class="keyword">ls</span> <span class="string">/root</span> &gt; <span class="string">/dev/null</span></span><br></pre></td></tr></table></figure></p>
-<p>ルート以外のユーザーは、出力を /dev/null にリダイレクトしたにもかかわらずエラーメッセージが表示されます。<br>通常、エラーは stderr に書き込まれます。</p>
-<p>最後に、stdin を出力とするファイルの入力リダイレクションを行うこともできます。<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> bash &lt; commands.txt</span></span><br></pre></td></tr></table></figure></p>
-<p>上記のコマンドは、commands.txt の内容を読み込み、bash インタプリタを使用してそれらを実行します。</p>
-<h1 id="リダイレクトの実装"><a href="#リダイレクトの実装" class="headerlink" title="リダイレクトの実装"></a>リダイレクトの実装</h1><p>とにかく、この記事のポイントは、そのような機能がどのように実装されているかです。<br>プロセスフォークを理解すれば、非常に簡単になることが分かります。</p>
-<p>プロセスが別のプロセス（例えば bash を実行しているls）を実行したいとき、それは一般的に次のように動作します：</p>
-<ol>
-<li>メインプロセス（bash など）は、<code>fork</code> という <code>glibc</code> ラッパーを使って <code>fork</code> します（sidenode: <code>fork</code> では、実際には <code>fork(2)</code> システムコールではなく <code>glibc</code> ラッパーを呼び出しています）。<code>glibc</code> ラッパーは、<code>clone(2)</code> がより強力であるため、<code>fork(2)</code> のシステムコールではなく、システムコール（syscall）</li>
-<li><code>fork</code> されたプロセスは、出力リダイレクトがコマンドラインで入力されたことを確認し、<code>open(2)</code> のシステムコールまたは同等のものを使用して指定されたファイルを開きます。</li>
-<li><code>fork</code> されたプロセスは <code>dup2</code> を呼び出して、新しく開かれたファイル記述子を stdin/stdout/stderr にコピーします。</li>
-<li><code>fork</code> されたプロセスは元のファイルハンドラを閉じて、リソースリークを防ぎます。</li>
-<li><code>fork</code> されたプロセスは <code>execve(2)</code> のシステムコールまたは同様のものを呼び出して、実行可能なイメージを実行するプロセスのイメージ（たとえば <code>ls</code>）に置き換えるか、</li>
-</ol>
-<p>同じことをするコード例を次に示します。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> *argv[] = &#123; <span class="string">"/bin/ls"</span>, <span class="string">"-la"</span>, <span class="number">0</span> &#125;;</span><br><span class="line">    <span class="keyword">char</span> *envp[] =</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"HOME=/"</span>,</span><br><span class="line">        <span class="string">"PATH=/bin:/usr/bin"</span>,</span><br><span class="line">        <span class="string">"USER=brandon"</span>,</span><br><span class="line">        <span class="number">0</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">int</span> fd = open(<span class="string">"/home/brandon/ls.log"</span>, O_WRONLY|O_CREAT|O_TRUNC, <span class="number">0666</span>);</span><br><span class="line">    dup2(fd, <span class="number">1</span>); <span class="comment">// stdout is file descriptor 1</span></span><br><span class="line">    close(fd);</span><br><span class="line">    execve(argv[<span class="number">0</span>], &amp;argv[<span class="number">0</span>], envp);</span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Oops!\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上記のコードは stdout を ls.log に設定し、 <code>ls -la</code> を実行します。<br><code>execve</code> が失敗しない限り、<code>fprintf</code> 以下は実行されませんのでご注意ください。<br>それで、リダイレクトが bash でどのように実装されるのです！</p>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">2247 </span> execve(<span class="string">"./redirect"</span>, [<span class="string">"./redirect"</span>], [/* <span class="number">18</span> vars */]) = <span class="number">0</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">2247 </span> <span class="keyword">open</span>(<span class="string">"/home/vagrant/ls.log"</span>, O_WRONLY|O_CREAT|O_TRUNC, <span class="number">0666</span>) = <span class="number">3</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">2247 </span> dup2(<span class="number">3</span>, <span class="number">1</span>)                        = <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">2247 </span> execve(<span class="string">"/bin/ls"</span>, [<span class="string">"/bin/ls"</span>, <span class="string">"-la"</span>], [/* <span class="number">3</span> vars */]) = <span class="number">0</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">2247 </span> <span class="keyword">write</span>(<span class="number">1</span>, <span class="string">"total 64\ndrwxrwxrwx 2 root    ro"</span>..., <span class="number">620</span>) = <span class="number">620</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">2247 </span> exit_group(<span class="number">0</span>)                     = ?</span><br><span class="line"><span class="symbol">2247 </span> +++ exited with <span class="number">0</span> +++</span><br></pre></td></tr></table></figure>
-<p>/usr/include/unistd.h<br><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Standard file descriptors.  */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> STDIN_FILENO    0       <span class="comment">/* Standard input.  */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> STDOUT_FILENO   1       <span class="comment">/* Standard output.  */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> STDERR_FILENO   2       <span class="comment">/* Standard error output.  */</span></span></span><br></pre></td></tr></table></figure></p>
-<figure class="highlight dns"><table><tr><td class="code"><pre><span class="line"># who</span><br><span class="line">root     pts/<span class="number">0</span>        <span class="number">2018-10-07</span> <span class="number">20</span>:<span class="number">10</span> (<span class="number">10.16.0.1</span>)</span><br><span class="line">root     pts/<span class="number">1</span>        <span class="number">2018-10-08</span> <span class="number">07</span>:<span class="number">54</span> (<span class="number">10.16.0.1</span>)</span><br></pre></td></tr></table></figure>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="comment"># tty</span></span><br><span class="line"><span class="regexp">/dev/</span>pts<span class="regexp">/0</span></span><br></pre></td></tr></table></figure>
-
-      
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://haystacker.net/linux-redirect-deep-dive/" data-id="cjr4att040002rdijji1jm6as" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
-
-
-    </footer>
-  </div>
   
 </article>
 
-
-
-  
-    <article id="post-linux-process-creation-deep-dive" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/linux-process-creation-deep-dive/" class="article-date">
-  <time datetime="2018-10-06T22:53:08.000Z" itemprop="datePublished">2018-10-07</time>
-</a>
-
-    
-
-  </div>
-  <div class="article-inner">
-    
-
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/linux-process-creation-deep-dive/">[徹底解説] Linux プロセス生成のしくみ</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <div class="article-sharing">
-  <ul>
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://haystacker.net/linux-process-creation-deep-dive/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://haystacker.net/linux-process-creation-deep-dive/" data-via="{{ theme.twitter }}" data-counturl="http://haystacker.net/linux-process-creation-deep-dive/" >Tweet</a>
-    </li>
-    <li>
-      <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="http://haystacker.net/linux-process-creation-deep-dive/"></div>
-    </li>
-  </ul>
-</div>
-
-      
-      
-        
-        <p>Linux においてプロセスは、<code>fork(2)</code> および <code>clone(2)</code> システムコールを使用することにより生成された後、<br><code>exec(2)</code> システムコールを使用して新規プログラムが実行される。</p>
-<p>まずは、実際のプロセス生成を模擬した以下のサンプルプログラムを実行し、プロセス生成のしくみについて理解を深めていく。<br><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> pid = fork();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (pid == <span class="number">-1</span>) &#123;</span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"プロセスの複製に失敗しました。\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (pid == <span class="number">0</span>) &#123;  <span class="comment">// 子プロセスの場合</span></span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stdout</span>, <span class="string">"ls コマンド実行のための子プロセス生成 (PID: %d)\n"</span>, getpid());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// システムコールするため、引数および環境変数を設定</span></span><br><span class="line">    <span class="keyword">char</span> *argv[] = &#123; <span class="string">"/bin/ls"</span>, <span class="string">"-la"</span>, <span class="number">0</span> &#125;;</span><br><span class="line">    <span class="keyword">char</span> *envp[] = &#123; <span class="string">"HOME=/"</span>, <span class="string">"PATH=/bin:/usr/bin"</span>, <span class="string">"USER=brandon"</span>, <span class="number">0</span> &#125;;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// execve(2) システムコールにより、プロセスを実行可能イメージに置き換える</span></span><br><span class="line">    execve(argv[<span class="number">0</span>], &amp;argv[<span class="number">0</span>], envp);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// execve(2) からのリターンがない場合は異常終了</span></span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"エラーが発生しました。\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (pid &gt; <span class="number">0</span>) &#123;  <span class="comment">// 親プロセスの場合</span></span><br><span class="line">    <span class="keyword">int</span> status;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stdout</span>, <span class="string">"親プロセスは子プロセスの実行完了するまで待機 (PID: %d)\n"</span>, getpid());</span><br><span class="line">    wait(&amp;status);</span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stdout</span>, <span class="string">"子プロセスの実行完了 (リターンコード: %i)、および親プロセスの終了\n"</span>, status);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>サンプルコードを実行すると以下のような出力を得られる。<br>この出力結果より、まず、子プロセスが生成され、親プロセスは子プロセス完了を待機し、子プロセスの処理終了を受けて親プロセスが終了していることがわかる。</p>
-<figure class="highlight tap"><table><tr><td class="code"><pre><span class="line">$ gcc -o fork_exec fork_exec.c</span><br><span class="line">$ strace -o /tmp/fork_exec.log -f ./fork_exec</span><br><span class="line">親プロセスは子プロセスの実行完了するまで待機 (PID: 18040)</span><br><span class="line">ls コマンド実行のための子プロセス生成 (PID: 18041)</span><br><span class="line">total 16</span><br><span class="line">drwxr-xr-x<span class="number"> 2 </span>root root  <span class="number"> 40 </span>Oct <span class="number"> 7 </span>21:30 .</span><br><span class="line">drwxr-xr-x<span class="number"> 3 </span>root root  <span class="number"> 19 </span>Oct <span class="number"> 7 </span>21:23 ..</span><br><span class="line">-rwxr-xr-x<span class="number"> 1 </span>root root<span class="number"> 8792 </span>Oct <span class="number"> 7 </span>21:25 fork_exec</span><br><span class="line">-rw-r--r--<span class="number"> 1 </span>root root<span class="number"> 1181 </span>Oct <span class="number"> 7 </span>21:25 fork_exec.c</span><br><span class="line">子プロセスの実行完了 (リターンコード: 0)、および親プロセスの終了</span><br></pre></td></tr></table></figure>
-<p>strace の出力ファイルを参照すると、より詳細な内容を把握することができる。<br><img src="/linux-process-creation-deep-dive//fork_exec.png" width="300px"></p>
-<ol>
-<li><p>親プロセスから子プロセスをクローン</p>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">18040 </span>clone(child_stack=<span class="number">0</span>, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=<span class="number">0</span>x7fb6cbfeaa10) = <span class="number">18041</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>親プロセスは子プロセスの実行が完了するまで待機</p>
-<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line"><span class="comment">// "親プロセスは子プロセスの実行完了するまで待機 (PID: 18040)"</span></span><br><span class="line"><span class="number">18040</span> wait4(<span class="number">-1</span>,  &lt;unfinished ...&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>子プロセスが <code>execve()</code> によって実行可能状態に遷移</p>
-<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line"><span class="comment">// "ls コマンド実行のための子プロセス生成 (PID: 18041)"</span></span><br><span class="line"><span class="number">18041</span> execve(<span class="string">"/bin/ls"</span>, [<span class="string">"/bin/ls"</span>, <span class="string">"-la"</span>], [<span class="comment">/* 3 vars */</span>]) = <span class="number">0</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>ls</code> コマンドの実行・表示</p>
-<figure class="highlight tap"><table><tr><td class="code"><pre><span class="line">// "total 16"</span><br><span class="line">// "drwxr-xr-x<span class="number"> 2 </span>root root  <span class="number"> 40 </span>Oct <span class="number"> 7 </span>21:30 ."</span><br><span class="line">// "drwxr-xr-x<span class="number"> 3 </span>root root  <span class="number"> 19 </span>Oct <span class="number"> 7 </span>21:23 .."</span><br><span class="line">// "-rwxr-xr-x<span class="number"> 1 </span>root root<span class="number"> 8792 </span>Oct <span class="number"> 7 </span>21:25 fork_exec"</span><br><span class="line">// "-rw-r--r--<span class="number"> 1 </span>root root<span class="number"> 1181 </span>Oct <span class="number"> 7 </span>21:25 fork_exec.c"</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>子プロセスの終了 (リターンコード: 0)</p>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">18041 </span>exit_group(<span class="number">0</span>)                     = ?</span><br><span class="line"><span class="symbol">18041 </span>+++ exited with <span class="number">0</span> +++</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>親プロセスで子プロセスの終了を受理・処理の再開</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="number">18040</span> <span class="string">&lt;...</span> <span class="string">wait4</span> <span class="string">resumed&gt;</span> <span class="string">[&#123;WIFEXITED(s)</span> <span class="string">&amp;&amp;</span> <span class="string">WEXITSTATUS(s)</span> <span class="string">==</span> <span class="number">0</span><span class="string">&#125;],</span> <span class="number">0</span><span class="string">,</span> <span class="literal">NULL</span><span class="string">)</span> <span class="string">=</span> <span class="number">18041</span></span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="number">18040</span> <span class="meta">---</span> <span class="string">SIGCHLD</span> <span class="string">&#123;si_signo=SIGCHLD,</span> <span class="string">si_code=CLD_EXITED,</span> <span class="string">si_pid=18041,</span> <span class="string">si_uid=0,</span> <span class="string">si_status=0,</span> <span class="string">si_utime=0,</span> <span class="string">si_stime=0&#125;</span> <span class="meta">---</span></span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="string">//</span> <span class="string">"子プロセスの実行完了 (リターンコード: 0)、および親プロセスの終了"</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>親プロセスの終了 (リターンコード: 0)</p>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">18040 </span>exit_group(<span class="number">0</span>)                     = ?</span><br><span class="line"><span class="symbol">18040 </span>+++ exited with <span class="number">0</span> +++</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-
-      
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://haystacker.net/linux-process-creation-deep-dive/" data-id="cjr4att080003rdij82lunjmf" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-howto-use-openstack-api" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/howto-use-openstack-api/" class="article-date">
-  <time datetime="2018-09-08T03:05:27.000Z" itemprop="datePublished">2018-09-08</time>
-</a>
-
-    
-
-  </div>
-  <div class="article-inner">
-    
-
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/howto-use-openstack-api/">OpenStack API 実装例</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <div class="article-sharing">
-  <ul>
-    <li>
-      <a href="http://b.hatena.ne.jp/entry/http://haystacker.net/howto-use-openstack-api/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-    </li>
-    <li>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://haystacker.net/howto-use-openstack-api/" data-via="{{ theme.twitter }}" data-counturl="http://haystacker.net/howto-use-openstack-api/" >Tweet</a>
-    </li>
-    <li>
-      <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="http://haystacker.net/howto-use-openstack-api/"></div>
-    </li>
-  </ul>
-</div>
-
-      
-      
-        <h1 id="curl-使用"><a href="#curl-使用" class="headerlink" title="curl 使用"></a>curl 使用</h1><p>まずは OpenStack の環境変数を読み込む。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/overcloudrc</span><br></pre></td></tr></table></figure>
-<p>次にユーザ名とパスワード、ドメイン名を指定し、トークンを取得する。<br>keystone で v2 を使用しているか v3 を使用しているかによって トークンの表示位置が変更するので注意が必要。<br>今回は、keysotne v3 を前提にしている。<br>
-        
-          <p class="article-more-link">
-            <a href="/howto-use-openstack-api/#more">続きを読む</a>
-          </p>
-        
-      
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://haystacker.net/howto-use-openstack-api/" data-id="cjr4att0m0008rdijw9dlhrqq" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenStack/">OpenStack</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-  
 
 
 </section>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>[徹底解説] Linux リダイレクトのしくみ | HayStacker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="description" content="フードの中で bash リダイレクションがどのように機能するのか疑問に思ったことはありますか？リダイレクト自体はかなり簡単です。 bash を使うと、ファイルをプロセスの stdin にリダイレクトすることも、プロセスの stdout/stderr をファイルや他のファイル記述子にリダイレクトすることもできます（ stderr を stdout にリダイレクトするなど、ファイル記述子なので）。 リ">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[徹底解説] Linux リダイレクトのしくみ">
+<meta property="og:url" content="http://haystacker.net/linux-redirect-deep-dive/index.html">
+<meta property="og:site_name" content="HayStacker">
+<meta property="og:description" content="フードの中で bash リダイレクションがどのように機能するのか疑問に思ったことはありますか？リダイレクト自体はかなり簡単です。 bash を使うと、ファイルをプロセスの stdin にリダイレクトすることも、プロセスの stdout/stderr をファイルや他のファイル記述子にリダイレクトすることもできます（ stderr を stdout にリダイレクトするなど、ファイル記述子なので）。 リ">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-05T17:42:18.899Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[徹底解説] Linux リダイレクトのしくみ">
+<meta name="twitter:description" content="フードの中で bash リダイレクションがどのように機能するのか疑問に思ったことはありますか？リダイレクト自体はかなり簡単です。 bash を使うと、ファイルをプロセスの stdin にリダイレクトすることも、プロセスの stdout/stderr をファイルや他のファイル記述子にリダイレクトすることもできます（ stderr を stdout にリダイレクトするなど、ファイル記述子なので）。 リ">
+<meta name="twitter:creator" content="@jundo414">
+  
+    <link rel="alternative" href="/atom.xml" title="HayStacker" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="favicon.ico">
+  
+  <link href='//fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">HayStacker</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        
+          <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://haystacker.net"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-linux-redirect-deep-dive" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/linux-redirect-deep-dive/" class="article-date">
+  <time datetime="2018-10-07T20:54:07.000Z" itemprop="datePublished">2018-10-08</time>
+</a>
+
+    
+
+  </div>
+  <div class="article-inner">
+    
+
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [徹底解説] Linux リダイレクトのしくみ
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <div class="article-sharing">
+  <ul>
+    <li>
+      <a href="http://b.hatena.ne.jp/entry/http://haystacker.net/linux-redirect-deep-dive/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    </li>
+    <li>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://haystacker.net/linux-redirect-deep-dive/" data-via="{{ theme.twitter }}" data-counturl="http://haystacker.net/linux-redirect-deep-dive/" >Tweet</a>
+    </li>
+    <li>
+      <div class="fb-like" data-send="false" data-layout="button_count" data-show-faces="false" data-font="verdana" data-href="http://haystacker.net/linux-redirect-deep-dive/"></div>
+    </li>
+  </ul>
+</div>
+
+      
+      
+        
+        <p>フードの中で bash リダイレクションがどのように機能するのか疑問に思ったことはありますか？<br>リダイレクト自体はかなり簡単です。</p>
+<p>bash を使うと、ファイルをプロセスの stdin にリダイレクトすることも、プロセスの stdout/stderr をファイルや他のファイル記述子にリダイレクトすることもできます（ stderr を stdout にリダイレクトするなど、ファイル記述子なので）。</p>
+<p>リダイレクトは次のようになります。<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ls -la &gt; output.txt</span></span><br></pre></td></tr></table></figure></p>
+<p>上記のコマンドは、stdout を <code>ls</code> コマンドから output.txt ファイルにリダイレクトします。<br>stderr をリダイレクトする方法は次のとおりです。<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ls -la 2 &gt; errors.txt</span></span><br></pre></td></tr></table></figure></p>
+<p>これにより、stderr から errors.txt にすべてが送信されます（許可が拒否されたメッセージなど）。<br>そのため、たとえば次のような場合は、<br><figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line">$ <span class="keyword">ls</span> <span class="string">/root</span> &gt; <span class="string">/dev/null</span></span><br></pre></td></tr></table></figure></p>
+<p>ルート以外のユーザーは、出力を /dev/null にリダイレクトしたにもかかわらずエラーメッセージが表示されます。<br>通常、エラーは stderr に書き込まれます。</p>
+<p>最後に、stdin を出力とするファイルの入力リダイレクションを行うこともできます。<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> bash &lt; commands.txt</span></span><br></pre></td></tr></table></figure></p>
+<p>上記のコマンドは、commands.txt の内容を読み込み、bash インタプリタを使用してそれらを実行します。</p>
+<h1 id="リダイレクトの実装"><a href="#リダイレクトの実装" class="headerlink" title="リダイレクトの実装"></a>リダイレクトの実装</h1><p>とにかく、この記事のポイントは、そのような機能がどのように実装されているかです。<br>プロセスフォークを理解すれば、非常に簡単になることが分かります。</p>
+<p>プロセスが別のプロセス（例えば bash を実行しているls）を実行したいとき、それは一般的に次のように動作します：</p>
+<ol>
+<li>メインプロセス（bash など）は、<code>fork</code> という <code>glibc</code> ラッパーを使って <code>fork</code> します（sidenode: <code>fork</code> では、実際には <code>fork(2)</code> システムコールではなく <code>glibc</code> ラッパーを呼び出しています）。<code>glibc</code> ラッパーは、<code>clone(2)</code> がより強力であるため、<code>fork(2)</code> のシステムコールではなく、システムコール（syscall）</li>
+<li><code>fork</code> されたプロセスは、出力リダイレクトがコマンドラインで入力されたことを確認し、<code>open(2)</code> のシステムコールまたは同等のものを使用して指定されたファイルを開きます。</li>
+<li><code>fork</code> されたプロセスは <code>dup2</code> を呼び出して、新しく開かれたファイル記述子を stdin/stdout/stderr にコピーします。</li>
+<li><code>fork</code> されたプロセスは元のファイルハンドラを閉じて、リソースリークを防ぎます。</li>
+<li><code>fork</code> されたプロセスは <code>execve(2)</code> のシステムコールまたは同様のものを呼び出して、実行可能なイメージを実行するプロセスのイメージ（たとえば <code>ls</code>）に置き換えるか、</li>
+</ol>
+<p>同じことをするコード例を次に示します。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> *argv[] = &#123; <span class="string">"/bin/ls"</span>, <span class="string">"-la"</span>, <span class="number">0</span> &#125;;</span><br><span class="line">    <span class="keyword">char</span> *envp[] =</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"HOME=/"</span>,</span><br><span class="line">        <span class="string">"PATH=/bin:/usr/bin"</span>,</span><br><span class="line">        <span class="string">"USER=brandon"</span>,</span><br><span class="line">        <span class="number">0</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">int</span> fd = open(<span class="string">"/home/brandon/ls.log"</span>, O_WRONLY|O_CREAT|O_TRUNC, <span class="number">0666</span>);</span><br><span class="line">    dup2(fd, <span class="number">1</span>); <span class="comment">// stdout is file descriptor 1</span></span><br><span class="line">    close(fd);</span><br><span class="line">    execve(argv[<span class="number">0</span>], &amp;argv[<span class="number">0</span>], envp);</span><br><span class="line">    <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Oops!\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上記のコードは stdout を ls.log に設定し、 <code>ls -la</code> を実行します。<br><code>execve</code> が失敗しない限り、<code>fprintf</code> 以下は実行されませんのでご注意ください。<br>それで、リダイレクトが bash でどのように実装されるのです！</p>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">2247 </span> execve(<span class="string">"./redirect"</span>, [<span class="string">"./redirect"</span>], [/* <span class="number">18</span> vars */]) = <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">2247 </span> <span class="keyword">open</span>(<span class="string">"/home/vagrant/ls.log"</span>, O_WRONLY|O_CREAT|O_TRUNC, <span class="number">0666</span>) = <span class="number">3</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">2247 </span> dup2(<span class="number">3</span>, <span class="number">1</span>)                        = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">2247 </span> execve(<span class="string">"/bin/ls"</span>, [<span class="string">"/bin/ls"</span>, <span class="string">"-la"</span>], [/* <span class="number">3</span> vars */]) = <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">2247 </span> <span class="keyword">write</span>(<span class="number">1</span>, <span class="string">"total 64\ndrwxrwxrwx 2 root    ro"</span>..., <span class="number">620</span>) = <span class="number">620</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">2247 </span> exit_group(<span class="number">0</span>)                     = ?</span><br><span class="line"><span class="symbol">2247 </span> +++ exited with <span class="number">0</span> +++</span><br></pre></td></tr></table></figure>
+<p>/usr/include/unistd.h<br><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Standard file descriptors.  */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> STDIN_FILENO    0       <span class="comment">/* Standard input.  */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> STDOUT_FILENO   1       <span class="comment">/* Standard output.  */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> STDERR_FILENO   2       <span class="comment">/* Standard error output.  */</span></span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight dns"><table><tr><td class="code"><pre><span class="line"># who</span><br><span class="line">root     pts/<span class="number">0</span>        <span class="number">2018-10-07</span> <span class="number">20</span>:<span class="number">10</span> (<span class="number">10.16.0.1</span>)</span><br><span class="line">root     pts/<span class="number">1</span>        <span class="number">2018-10-08</span> <span class="number">07</span>:<span class="number">54</span> (<span class="number">10.16.0.1</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="comment"># tty</span></span><br><span class="line"><span class="regexp">/dev/</span>pts<span class="regexp">/0</span></span><br></pre></td></tr></table></figure>
+
+      
+      
+        
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://haystacker.net/linux-redirect-deep-dive/" data-id="cjr4att040002rdijji1jm6as" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/linux-pipe-deep-dive/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer Post</strong>
+      <div class="article-nav-title">
+        
+          [徹底解説] Linux パイプのしくみ
+        
+      </div>
+    </a>
+  
+  
+    <a href="/linux-process-creation-deep-dive/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older Post</strong>
+      <div class="article-nav-title">[徹底解説] Linux プロセス生成のしくみ</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 id="widget-title-about" class="widget-title">About</h3>
+    <div class="widget">
+      
+        <p><b><font size="3em"> Hayato Otsuka </font></b></p>
+      
+      
+        <p> 東京界隈に出没する仮想化基盤/クラウド系のITエンジニア </p>
+      
+      
+        <p>  </p>
+      
+      <br />
+      
+        <p>Twitter: <a href="http://twitter.com/jundo414">@jundo414</a> </p>
+      
+      
+        <p>Facebook: <a href="https://www.facebook.com/hayato.otsuka.16">@hayato.otsuka.16</a> </p>
+      
+      
+        <p>SlideShare <a href="https://www.slideshare.net/jundo414">@jundo414</a> </p>
+      
+      
+        <p>GitHub <a href="https://github.com/jundo414">@jundo414</a> </p>
+      
+      
+      </p>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 id="widget-title-tag" class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenStack/">OpenStack</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 id="widget-title-archive" class="widget-title" data-skip-mobile-nav="true">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 id="widget-title-recent-posts" class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/linux-pipe-deep-dive/">[徹底解説] Linux パイプのしくみ</a>
+          </li>
+        
+          <li>
+            <a href="/linux-redirect-deep-dive/">[徹底解説] Linux リダイレクトのしくみ</a>
+          </li>
+        
+          <li>
+            <a href="/linux-process-creation-deep-dive/">[徹底解説] Linux プロセス生成のしくみ</a>
+          </li>
+        
+          <li>
+            <a href="/howto-use-openstack-api/">OpenStack API 実装例</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      Copyrights &copy; 2019 Hayato Otsuka All Rights Reserved. <br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.
+      Themed by <a href="https://github.com/kwhrtsk/hexo-theme-ingenuous">Ingenuous</a> (based on <a href="https://github.com/hexojs/hexo-theme-landscape">Landscape</a>).
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.4";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+<script src="/js/script.js"></script>
+
+
+  </div>
+</body>
+</html>
